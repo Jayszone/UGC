@@ -122,7 +122,7 @@ export default function BuildPage() {
         });
         if (!resp.ok) { const e = await resp.json().catch(() => ({ detail: `HTTP ${resp.status}` })); throw new Error(e?.detail ?? `HTTP ${resp.status}`); }
         const data: Campaign = await resp.json();
-        saveCampaign({ ...data, company, wizard_answers: answers });
+        saveCampaign({ ...data, company: company ?? undefined, wizard_answers: answers });
         router.push("/studio");
       } catch (e) { setGenerating(false); alert(`Generation failed.\n\n${e instanceof Error ? e.message : e}`); }
     } else {
