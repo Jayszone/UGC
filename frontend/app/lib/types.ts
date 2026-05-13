@@ -1,11 +1,47 @@
-export interface CampaignRequest {
-  corridor: string;
-  audience: string;
-  pain_point: string;
-  tone: string;
-  platform: string;
-  campaign_goal: string;
-  number_of_scripts: number;
+export interface CompanyOption {
+  identifier: string;
+  name: string;
+  type: string;
+  description: string;
+}
+
+export interface CompanyProfile {
+  identifier: string;
+  name: string;
+  type: string;
+  description: string;
+  usp: string;
+  key_facts: string[];
+  url?: string;
+}
+
+export interface WizardOption {
+  label: string;
+  value: string;
+}
+
+export interface WizardField {
+  id: string;
+  label: string;
+  description?: string;
+  options: WizardOption[];
+}
+
+export interface WizardStep {
+  id: string;
+  title: string;
+  fields: WizardField[];
+}
+
+export interface WizardConfig {
+  steps: WizardStep[];
+}
+
+export interface CreativeBrief {
+  vibe: string;
+  setup: string;
+  props: string[];
+  hook_ideas: string[];
 }
 
 export interface Script {
@@ -34,8 +70,14 @@ export interface ExperimentPlan {
 export interface Campaign {
   campaign_name: string;
   target_insight: string;
-  corridor_context: string;
+  creative_brief: CreativeBrief;
   scripts: Script[];
   experiment_plan: ExperimentPlan;
-  config?: CampaignRequest;
+  company?: CompanyProfile;
+  wizard_answers?: Record<string, string>;
+}
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
 }
