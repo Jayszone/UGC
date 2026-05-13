@@ -358,13 +358,13 @@ export default function StudioPage() {
 
   async function handleRefine(scriptId: number, message: string) {
     const script = scripts.find(s => s.id === scriptId);
-    if (!script || !message.trim() || refining) return;
+    if (!script || !message.trim() || refining || !campaign) return;
     setRefining(true);
     setChats(prev => ({ ...prev, [scriptId]: [...(prev[scriptId] ?? []), { role: "user", content: message }] }));
     try {
       const resp = await fetch(`${API}/api/refine`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ script, message, company: company ?? {}, campaign_context: campaign.target_insight ?? "" }),
+        body: JSON.stringify({ script, message, company: company ?? {}, campaign_context: campaign?.target_insight ?? "" }),
       });
       const data = await resp.json();
       const updated: Script = data.script;
